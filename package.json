@@ -4,6 +4,10 @@
   "main": "index.js",
   "repository": "https://github.com/amistein/daily_coding.git",
   "license": "MIT",
+  "scripts": {
+    "lint": "eslint .",
+    "lint:fix": "eslint --fix ."
+  },
   "devDependencies": {
     "eslint": "^5.7.0"
   }
