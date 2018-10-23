@@ -1,0 +1,10 @@
+{
+  "name": "daily_coding",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/amistein/daily_coding.git",
+  "license": "MIT",
+  "devDependencies": {
+    "eslint": "^5.7.0"
+  }
+}
