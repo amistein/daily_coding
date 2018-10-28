@@ -149,6 +149,37 @@ function rightView(tree) {
   return levels(tree).map(l => l.pop())
 }
 
+// O(n^2)
+function maxPathSum(tree) {
+  function maxsum(tree) {
+    if (!tree) return 0
+    const nextTree = maxsum(tree.left) > maxsum(tree.right) ? tree.left : tree.right
+    return tree.val + maxsum(nextTree)
+  }
+
+  if (!tree) return -Infinity
+  return Math.max(tree.val + maxsum(tree.left) + maxsum(tree.right), maxPathSum(tree.left), maxPathSum(tree.right))
+}
+
+// O(n)
+function maxPathSum(tree) {
+  function loop(tree) {
+    if (!tree) return [-Infinity, 0]
+    if (!tree.left && !tree.right) return [tree.val, tree.val]
+    const [leftMaxPath, leftMaxSum] = loop(tree.left)
+    const [rightMaxPath, rightMaxSum] = loop(tree.right)
+    const currentMaxPath = Math.max(
+      tree.val + leftMaxSum + rightMaxSum,
+      leftMaxPath,
+      rightMaxPath
+    )
+    const currentMaxSum = tree.val + Math.max(leftMaxSum, rightMaxSum)
+
+    return [currentMaxPath, currentMaxSum]
+  }
+  return loop(tree).shift()
+}
+
 // fromString(25, "25 22 L 25 28 R 22 5 L 22 24 R 5 3 L 3 1 L 28 27 L 28 35 R")
 const a = new Tree(25, new Tree(22, new Tree(5, new Tree(3, new Tree(1))), new Tree(24)), new Tree(28, new Tree(27), new Tree(35)))
 
@@ -157,6 +188,7 @@ const b = new Tree(10, new Tree(8, new Tree(3), new Tree(5)), new Tree(2, new Tr
 const c = fromString(1, "1 2 R 1 3 L")
 const d = fromString(10, "10 20 L 10 30 R 20 40 L 20 60 R")
 const e = fromString(1, "1 2 L 1 3 R 2 4 L 2 5 R 3 6 L 3 7 R 4 8 R")
+const f = fromString(-15, "-15 5 L -15 6 R 5 -8 L 5 1 R -8 2 L -8 -3 R 6 3 L 6 9 R 9 0 R 0 4 L 0 -1 R -1 10 L")
 
 
 console.log(inorder(a))
@@ -174,3 +206,4 @@ console.log("balanced b: " + balanced(b))
 console.log("lca (a, 24, 1): " + lca(a, 24, 1))
 console.log("leftView(e): " + leftView(e))
 console.log("rightView(e): " + rightView(e))
+console.log("maxPathSum(f): " + maxPathSum(f))
