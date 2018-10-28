@@ -55,7 +55,7 @@ function inorderDesc(tree) {
   return inorderDesc(tree.right).concat(tree.val).concat(inorderDesc(tree.left))  
 }
 
-// Logs but does return a value
+// Logs but does not return a value
 function logInorder(tree) {
   if (!tree) return
   logInorder(tree.left)
