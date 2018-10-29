@@ -150,6 +150,7 @@ function rightView(tree) {
 }
 
 // O(n^2)
+// BUG: maxSumPath(g) returns 14, should return 7
 function maxPathSum(tree) {
   function maxsum(tree) {
     if (!tree) return 0
@@ -162,6 +163,7 @@ function maxPathSum(tree) {
 }
 
 // O(n)
+// BUG: maxSumPath(g) returns 14, should return 7
 function maxPathSum(tree) {
   function loop(tree) {
     if (!tree) return [-Infinity, 0]
@@ -180,6 +182,20 @@ function maxPathSum(tree) {
   return loop(tree).shift()
 }
 
+function fromPreAndInorder(preorder, inorder) {
+  if (!preorder.length) return null
+  const [root] = preorder
+  const leftInorder = inorder.slice(0, inorder.indexOf(root))
+  const rightInorder = inorder.slice(inorder.indexOf(root) + 1)
+  const leftPreorder = preorder.filter(e => leftInorder.includes(e))
+  const rightPreorder = preorder.filter(e => rightInorder.includes(e))
+  return new Tree(
+    preorder[0],
+    fromPreAndInorder(leftPreorder, leftInorder),
+    fromPreAndInorder(rightPreorder, rightInorder)
+  )
+}
+
 // fromString(25, "25 22 L 25 28 R 22 5 L 22 24 R 5 3 L 3 1 L 28 27 L 28 35 R")
 const a = new Tree(25, new Tree(22, new Tree(5, new Tree(3, new Tree(1))), new Tree(24)), new Tree(28, new Tree(27), new Tree(35)))
 
@@ -189,6 +205,7 @@ const c = fromString(1, "1 2 R 1 3 L")
 const d = fromString(10, "10 20 L 10 30 R 20 40 L 20 60 R")
 const e = fromString(1, "1 2 L 1 3 R 2 4 L 2 5 R 3 6 L 3 7 R 4 8 R")
 const f = fromString(-15, "-15 5 L -15 6 R 5 -8 L 5 1 R -8 2 L -8 -3 R 6 3 L 6 9 R 9 0 R 0 4 L 0 -1 R -1 10 L")
+const g = fromString(-31, "-31 8 L -31 -20 R 8 4 L 4 2 L 4 1 R")
 
 
 console.log(inorder(a))
