@@ -150,7 +150,7 @@ function rightView(tree) {
 }
 
 // O(n^2)
-// BUG: maxSumPath(g) returns 14, should return 7
+// BUG: maxSumPath(h) returns 14, should return 7
 function maxPathSum(tree) {
   function maxsum(tree) {
     if (!tree) return 0
@@ -163,7 +163,7 @@ function maxPathSum(tree) {
 }
 
 // O(n)
-// BUG: maxSumPath(g) returns 14, should return 7
+// BUG: maxSumPath(h) returns 14, should return 7
 function maxPathSum(tree) {
   function loop(tree) {
     if (!tree) return [-Infinity, 0]
@@ -196,6 +196,18 @@ function fromPreAndInorder(preorder, inorder) {
   )
 }
 
+function zigzag(tree) {
+  const flatten = arr => arr.reduce((a, b) => a.concat(b))
+  function loop(result, q, reverse) {
+    if (!q.length) return result
+    const level = q.map(e => e.val)
+    const result1 = result.concat(reverse ? level.reverse() : level)
+    const q1 = flatten(q.map(node => [node.left, node.right].filter(n => n)))
+    return loop(result1, q1, !reverse)
+  }
+  return loop([], [tree], false)
+}
+
 // fromString(25, "25 22 L 25 28 R 22 5 L 22 24 R 5 3 L 3 1 L 28 27 L 28 35 R")
 const a = new Tree(25, new Tree(22, new Tree(5, new Tree(3, new Tree(1))), new Tree(24)), new Tree(28, new Tree(27), new Tree(35)))
 
@@ -205,7 +217,8 @@ const c = fromString(1, "1 2 R 1 3 L")
 const d = fromString(10, "10 20 L 10 30 R 20 40 L 20 60 R")
 const e = fromString(1, "1 2 L 1 3 R 2 4 L 2 5 R 3 6 L 3 7 R 4 8 R")
 const f = fromString(-15, "-15 5 L -15 6 R 5 -8 L 5 1 R -8 2 L -8 -3 R 6 3 L 6 9 R 9 0 R 0 4 L 0 -1 R -1 10 L")
-const g = fromString(-31, "-31 8 L -31 -20 R 8 4 L 4 2 L 4 1 R")
+const g = fromString(1, "1 2 L 1 3 R 2 4 L 2 5 R 3 6 L 3 7 R 4 8 L 5 9 R 6 10 L 7 11 R")
+const h = fromString(-31, "-31 8 L -31 -20 R 8 4 L 4 2 L 4 1 R")
 
 
 console.log(inorder(a))
@@ -224,3 +237,4 @@ console.log("lca (a, 24, 1): " + lca(a, 24, 1))
 console.log("leftView(e): " + leftView(e))
 console.log("rightView(e): " + rightView(e))
 console.log("maxPathSum(f): " + maxPathSum(f))
+console.log("zigzag(g): " + zigzag(g))
