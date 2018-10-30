@@ -208,6 +208,17 @@ function zigzag(tree) {
   return loop([], [tree], false)
 }
 
+function allLeafs(tree) {
+  if (!tree) return []
+  if (!tree.right && !tree.left) return [tree.val]
+  return allLeafs(tree.left).concat(allLeafs(tree.right))
+}
+
+function allPaths(tree) {
+  if (!tree) return []
+  if (!tree.left && !tree.right) return [[tree.val]]
+  return allPaths(tree.left).concat(allPaths(tree.right)).map(path => [tree.val].concat(path))
+
 // fromString(25, "25 22 L 25 28 R 22 5 L 22 24 R 5 3 L 3 1 L 28 27 L 28 35 R")
 const a = new Tree(25, new Tree(22, new Tree(5, new Tree(3, new Tree(1))), new Tree(24)), new Tree(28, new Tree(27), new Tree(35)))
 
@@ -238,3 +249,4 @@ console.log("leftView(e): " + leftView(e))
 console.log("rightView(e): " + rightView(e))
 console.log("maxPathSum(f): " + maxPathSum(f))
 console.log("zigzag(g): " + zigzag(g))
+console.log("allPaths(d): " + allPaths(d))
