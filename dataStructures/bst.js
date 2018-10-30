@@ -54,3 +54,24 @@ function getNodeCount(root, min, max) {
   if (root.val < min) return getNodeCount(root.right)
   return 1 + getNodeCount(root.left, min, max) + getNodeCount(root.right, min, max)
 }
+
+// Modify BST so that every node is the sum of
+// all nodes itself and greater.
+// (new tree will not be BST)
+// https://www.geeksforgeeks.org/add-greater-values-every-node-given-bst/
+function modifyToAllGreater(root) {
+  function leftMost(root) {
+    if (!root.left) return root
+    return leftMost(root.left)
+  }
+
+  function loop(root, acc) {
+    if (!root) return null
+    const newRight = loop(root.right, 0)
+    const rest = newRight ? leftMost(newRight).val : 0
+    const newVal = root.val + acc + rest
+    return new Tree(newVal, loop(root.left, newVal), newRight)
+  }
+
+  return loop(root, 0)
+}
