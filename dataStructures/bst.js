@@ -32,3 +32,25 @@ function remove(root, val) {
   if (!root.left || !root.right) return root.left || root.right
   return new Tree(newMin, remove(root.left, newMin), root.right)
 }
+
+// checks if array is inorder traversal of BST
+// (checks if array is unique and sorted ascending)
+// Not efficient because JS does not have tail call
+// optimization and arr - head is copied with every
+// function call.
+function isInorder(arr) {
+  function loop(head, tail) {
+    if (!tail.length) return true
+    if (tail[0] <= head) return false
+    return loop(tail[0], tail.slice(1))
+  }
+  return loop(arr[0], arr.slice(1))
+}
+
+// Count the number of nodes that lie in the given range.
+function getNodeCount(root, min, max) {
+  if (!root) return 0
+  if (root.val > max) return getNodeCount(root.left)
+  if (root.val < min) return getNodeCount(root.right)
+  return 1 + getNodeCount(root.left, min, max) + getNodeCount(root.right, min, max)
+}
