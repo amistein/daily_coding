@@ -36,7 +36,7 @@ function fromString(root, str) {
   edgeArr.forEach(e => {
     const [parent, child, dir] = e
     const node = find(tree, Number(parent))
-    if (dir == 'L') node.left = new Tree(Number(child))
+    if (dir == "L") node.left = new Tree(Number(child))
     else node.right = new Tree(Number(child))
   })
 
@@ -59,7 +59,6 @@ function inorderDesc(tree) {
 function logInorder(tree) {
   if (!tree) return
   logInorder(tree.left)
-  console.log(tree.val)
   logInorder(tree.right)
 }
 
@@ -149,8 +148,10 @@ function rightView(tree) {
   return levels(tree).map(l => l.pop())
 }
 
-// O(n^2)
-// BUG: maxSumPath(h) returns 14, should return 7
+/*
+ * O(n^2)
+ * BUG: maxSumPath(h) returns 14, should return 7
+ */
 function maxPathSum(tree) {
   function maxsum(tree) {
     if (!tree) return 0
@@ -162,9 +163,11 @@ function maxPathSum(tree) {
   return Math.max(tree.val + maxsum(tree.left) + maxsum(tree.right), maxPathSum(tree.left), maxPathSum(tree.right))
 }
 
-// O(n)
-// BUG: maxSumPath(h) returns 14, should return 7
-function maxPathSum(tree) {
+/*
+ * O(n)
+ * BUG: maxSumPath(h) returns 14, should return 7
+ */
+function maxPathSum1(tree) {
   function loop(tree) {
     if (!tree) return [-Infinity, 0]
     if (!tree.left && !tree.right) return [tree.val, tree.val]
@@ -218,8 +221,9 @@ function allPaths(tree) {
   if (!tree) return []
   if (!tree.left && !tree.right) return [[tree.val]]
   return allPaths(tree.left).concat(allPaths(tree.right)).map(path => [tree.val].concat(path))
+}
 
-// fromString(25, "25 22 L 25 28 R 22 5 L 22 24 R 5 3 L 3 1 L 28 27 L 28 35 R")
+fromString(25, "25 22 L 25 28 R 22 5 L 22 24 R 5 3 L 3 1 L 28 27 L 28 35 R")
 const a = new Tree(25, new Tree(22, new Tree(5, new Tree(3, new Tree(1))), new Tree(24)), new Tree(28, new Tree(27), new Tree(35)))
 
 const b = new Tree(10, new Tree(8, new Tree(3), new Tree(5)), new Tree(2, new Tree(2)))

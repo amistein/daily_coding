@@ -27,6 +27,9 @@ module.exports = {
         "multiline-comment-style": [
             "error",
             "starred-block"
+        ],
+        "no-unused-vars": [
+            "off"
         ]
     }
 };

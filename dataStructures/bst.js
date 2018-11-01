@@ -39,11 +39,13 @@ function inorder(tree) {
   return inorder(tree.left).concat(tree.val).concat(inorder(tree.right))
 }
 
-// checks if array is inorder traversal of BST
-// (checks if array is unique and sorted ascending)
-// Not efficient because JS does not have tail call
-// optimization and arr - head is copied with every
-// function call.
+/*
+ * checks if array is inorder traversal of BST
+ * (checks if array is unique and sorted ascending)
+ * Not efficient because JS does not have tail call
+ * optimization and arr - head is copied with every
+ * function call.
+ */
 function isInorder(arr) {
   function loop(head, tail) {
     if (!tail.length) return true
@@ -61,10 +63,12 @@ function getNodeCount(root, min, max) {
   return 1 + getNodeCount(root.left, min, max) + getNodeCount(root.right, min, max)
 }
 
-// Modify BST so that every node is the sum of
-// all nodes itself and greater.
-// (new tree will not be BST)
-// https://www.geeksforgeeks.org/add-greater-values-every-node-given-bst/
+/*
+ * Modify BST so that every node is the sum of
+ * all nodes itself and greater.
+ * (new tree will not be BST)
+ * https://www.geeksforgeeks.org/add-greater-values-every-node-given-bst/
+ */
 function modifyToAllGreater(root) {
   function leftMost(root) {
     if (!root.left) return root
@@ -97,8 +101,10 @@ function lca(root, n1, n2) {
   return root.val
 }
 
-// Convert level order traversal to BST
-// https://www.geeksforgeeks.org/construct-bst-given-level-order-traversal/
+/*
+ * Convert level order traversal to BST
+ * https://www.geeksforgeeks.org/construct-bst-given-level-order-traversal/
+ */
 function constructBst(arr) {
   const [first, second, third] = arr
 
