@@ -96,3 +96,14 @@ function lca(root, n1, n2) {
   if ((root.val < n1) && (root.val < n2)) return lca(root.right)
   return root.val
 }
+
+// Convert level order traversal to BST
+// https://www.geeksforgeeks.org/construct-bst-given-level-order-traversal/
+function constructBst(arr) {
+  const [first, second, third] = arr
+
+  if (!arr.length) return null
+  if (second > first) return new Tree(first, null, constructBst(arr.slice(1)))
+  if (third > first) return new Tree(first, constructBst(arr.filter(e => e < first)), constructBst(arr.filter(e => e > first)))
+  return new Tree(first, constructBst(arr.slice(1)), null)
+}
