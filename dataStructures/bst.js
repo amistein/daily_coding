@@ -8,25 +8,25 @@ class Tree {
 
 function min(root) {
   if (!root.left) return root.val
-  return min(root.left) 
+  return min(root.left)
 }
 
 function contains(tree, val) {
-  if (!tree) return false    
+  if (!tree) return false
   if (tree.val === val) return true
-  return contains(tree.left, val) || contains(tree.right, val)  
+  return contains(tree.left, val) || contains(tree.right, val)
 }
 
 function insert(root, val) {
   if (!root) return new Tree(val)
-  const left = val < root.val ? insert(root.left, val) : root.left 
+  const left = val < root.val ? insert(root.left, val) : root.left
   const right = val > root.val ? insert(root.right, val) : root.right
-  return new Tree(root.val, left, right)  
+  return new Tree(root.val, left, right)
 }
 
 function remove(root, val) {
   const newMin = min(root)
-  const left = val < root.val ? remove(root.left, val) : root.left 
+  const left = val < root.val ? remove(root.left, val) : root.left
   const right = val > root.val ? remove(root.right, val) : root.right
   if (root.val !== val) return new Tree(root.val, left, right)
   if (!root.left || !root.right) return root.left || root.right
@@ -144,4 +144,18 @@ function pairExists(root, target) {
 
   const ordered = inorder(root)
   return pairExistsArr(ordered, target)
+}
+
+function isBst(root) {
+  function loop(root, min, max) {
+    if (!root) return true
+
+    const left = root.left || Infinity
+    const right = root.right || -Infinity
+    if ((left.val > root.val) || (right.val < root.val)) return false
+    if ((left.val < min) || (right.val > max)) return false
+    return loop(root.left, min, root.val) && loop(root.right, root.val, max)
+  }
+
+  return loop(root, -Infinity, Infinity)
 }

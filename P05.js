@@ -18,7 +18,7 @@
 function cons(a, b) {
   function pair(f){
     return f(a, b)
-  }      
+  }
   return pair
 }
 

@@ -52,7 +52,7 @@ function inorder(tree) {
 // Get elements of BST in descending order
 function inorderDesc(tree) {
   if (!tree) return []
-  return inorderDesc(tree.right).concat(tree.val).concat(inorderDesc(tree.left))  
+  return inorderDesc(tree.right).concat(tree.val).concat(inorderDesc(tree.left))
 }
 
 // Logs but does not return a value
