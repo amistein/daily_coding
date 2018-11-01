@@ -33,6 +33,12 @@ function remove(root, val) {
   return new Tree(newMin, remove(root.left, newMin), root.right)
 }
 
+// Get elements of BST in ascending order
+function inorder(tree) {
+  if (!tree) return []
+  return inorder(tree.left).concat(tree.val).concat(inorder(tree.right))
+}
+
 // checks if array is inorder traversal of BST
 // (checks if array is unique and sorted ascending)
 // Not efficient because JS does not have tail call
@@ -74,4 +80,13 @@ function modifyToAllGreater(root) {
   }
 
   return loop(root, 0)
+}
+
+// https://www.geeksforgeeks.org/largest-number-bst-less-equal-n/
+function maxForKey(root, val) {
+  if (!root) return -1
+  if (root.val === val) return val
+  if (root.val > val) return maxForKey(root.left, val)
+  if (!root.right) return root.val
+  return Math.max(root.val, maxForKey(root.right, val))
 }
