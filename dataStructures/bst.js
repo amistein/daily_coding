@@ -125,3 +125,23 @@ function balanced(root) {
   const ordered = inorder(root)
   return fromArray(ordered)
 }
+
+/*
+ * Check if a pair with given target exists
+ * Approach: convert to sorted array and use
+ * use check for pair using O(n) approach
+ */
+function pairExists(root, target) {
+  // checks for pair in sorted array - O(n)
+  function pairExistsArr(arr, target) {
+    const sum = arr[0] + arr[arr.length - 1]
+
+    if (arr.length < 2) return false
+    if (sum === target) return true
+    if (sum < target) return pairExistsArr(arr.slice(1), target)
+    if (sum > target) return pairExistsArr(arr.slice(0, -1), target)
+  }
+
+  const ordered = inorder(root)
+  return pairExistsArr(ordered, target)
+}
