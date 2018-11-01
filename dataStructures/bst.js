@@ -90,3 +90,9 @@ function maxForKey(root, val) {
   if (!root.right) return root.val
   return Math.max(root.val, maxForKey(root.right, val))
 }
+
+function lca(root, n1, n2) {
+  if ((root.val > n1) && (root.val > n2)) return lca(root.left)
+  if ((root.val < n1) && (root.val < n2)) return lca(root.right)
+  return root.val
+}
