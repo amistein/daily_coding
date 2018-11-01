@@ -113,3 +113,15 @@ function constructBst(arr) {
   if (third > first) return new Tree(first, constructBst(arr.filter(e => e < first)), constructBst(arr.filter(e => e > first)))
   return new Tree(first, constructBst(arr.slice(1)), null)
 }
+
+function fromArray(arr) {
+  const middle = Math.floor(arr.length / 2)
+
+  if (!arr.length) return null
+  return new Tree(arr[middle], fromArray(arr.slice(0, middle)), fromArray(arr.slice(middle + 1)))
+}
+
+function balanced(root) {
+  const ordered = inorder(root)
+  return fromArray(ordered)
+}
