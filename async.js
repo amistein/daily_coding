@@ -5,8 +5,8 @@ function afterTwoSec(str) {
 }
 
 function* getName() {
-  const first = yield afterTwoSec('amrom')
-  const last = yield afterTwoSec('steinmetz')
+  const first = yield afterTwoSec("amrom")
+  const last = yield afterTwoSec("steinmetz")
   return `${first} ${last}`
 }
 
@@ -21,4 +21,5 @@ const aSync = it => {
   return iterate()
 }
 
+// eslint-disable-next-line no-console
 aSync(getName()).then(n => console.log(n))
