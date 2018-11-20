@@ -24,3 +24,36 @@ function lis(arr) {
 
   return Math.max(...longestIncreasingToIndex([]))
 }
+
+/*
+ * An element of array is leader if it is greater than or equal to all the elements to its right side.
+ * Also, the rightmost element is always a leader.
+ */
+function leaders(arr) {
+  function loop(arr, currMax, acc) {
+    if (!arr.length) return acc
+
+    const last = arr[arr.length - 1]
+    const newPrefix = last >= currMax ? [last] : []
+    return loop(arr.slice(0, -1), Math.max(currMax, last), newPrefix.concat(acc))
+  }
+
+  return loop(arr, 0, [])
+}
+
+/*
+ *    1
+ *   7 3
+ *  4 36 2
+ * 8 11 6 12
+ */
+
+function shortestPathSum(arr) {
+  if (!arr.length) return null
+  const [current] = arr
+  const next = shortestPathSum(arr.slice(1))
+  return next ? current.map((n, i) => n + Math.min(next[i], next[i + 1])) : current
+}
+
+const arr = [[1], [7,3], [4,36,2], [8,11,6,12]]
+shortestPathSum(arr)
