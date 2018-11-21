@@ -55,9 +55,6 @@ function shortestPathSum(arr) {
   return next ? current.map((n, i) => n + Math.min(next[i], next[i + 1])) : current
 }
 
-shortestPathSum([[1], [7,3], [4,36,2], [8,11,6,12]])
-
-
 function minPlatforms(arrivals, departures) {
   function loop(events, max, current) {
     if (!events.length) return max
@@ -74,4 +71,31 @@ function minPlatforms(arrivals, departures) {
   return loop(sorted, 0, 0)
 }
 
+function maxOfSubarrays(arr, n) {
+  function loop(arr, acc) {
+    if (arr.length < n) return acc
+    return loop(arr.slice(1), acc.concat(Math.max(...arr.slice(0, n))))
+  }
+
+  return loop(arr, [])
+}
+
+function reverseGroups(arr, n) {
+  function chunk(arr, n) {
+    return arr.reduce((result, elem, i) => {
+      const subArrayIndex = Math.floor(i / n)
+      const subArray = result[subArrayIndex] || []
+
+      result[subArrayIndex] = subArray.concat(elem)
+      return result
+    }, [])
+  }
+
+  return chunk(arr, n).reduce((a, b) => a.concat(b.reverse()), [])
+}
+
+
+shortestPathSum([[1], [7,3], [4,36,2], [8,11,6,12]])
 minPlatforms([900,  940, 950,  1100, 1500, 1800], [910, 1200, 1120, 1130, 1900, 2000])
+maxOfSubarrays([1, 2, 3, 1, 4, 5, 2, 3, 6], 3) // [ 3, 3, 4, 5, 5, 5, 6 ]
+reverseGroups([1, 2, 3, 4, 5], 3) // [ 3, 2, 1, 5, 4 ]
