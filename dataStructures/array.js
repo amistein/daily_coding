@@ -94,8 +94,21 @@ function reverseGroups(arr, n) {
   return chunk(arr, n).reduce((a, b) => a.concat(b.reverse()), [])
 }
 
+function rainWater(arr) {
+  const highestSoFar = arr => arr.slice(0, -1).reduce((a, b) => {
+    a.push(Math.max(a.slice(-1), b))
+    return a
+  }, [0])
+  const highestLeft = highestSoFar(arr)
+  const highestRight = highestSoFar(arr.reverse()).reverse()
+  const lowerWall = i => Math.min(highestLeft[i], highestRight[i])
+
+  return arr.map((n, i) => Math.max(lowerWall(i) - n, 0)).reduce((a, b) => a + b)
+}
+
 
 shortestPathSum([[1], [7,3], [4,36,2], [8,11,6,12]])
 minPlatforms([900,  940, 950,  1100, 1500, 1800], [910, 1200, 1120, 1130, 1900, 2000])
 maxOfSubarrays([1, 2, 3, 1, 4, 5, 2, 3, 6], 3) // [ 3, 3, 4, 5, 5, 5, 6 ]
 reverseGroups([1, 2, 3, 4, 5], 3) // [ 3, 2, 1, 5, 4 ]
+rainWater([3, 0, 0, 2, 0, 4]) // 10
