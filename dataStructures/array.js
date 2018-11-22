@@ -106,9 +106,59 @@ function rainWater(arr) {
   return arr.map((n, i) => Math.max(lowerWall(i) - n, 0)).reduce((a, b) => a + b)
 }
 
+function pythagoreanTriplet(arr) {
+  function loop(arr, start, end, last) {
+    const sum = arr[start] + arr[end]
+    const nextArr = arr.slice(0, -1)
+
+    if (!arr.length) return false
+    if (sum === last) return true
+    if (start === end) return loop(nextArr, 0, nextArr.length - 1, arr[arr.length - 1])
+    return loop(arr, sum < last ? start + 1 : start, sum > last ? end - 1 : end, last)
+  }
+
+  const squared = arr.map(e => e * e)
+  const sorted = squared.sort((a, b) => a - b)
+  const head = sorted.slice(0, -1)
+  const tail = sorted[sorted.length - 1]
+
+  return loop(head, 0, head.length - 1, tail)
+}
+
+function chocolateDistribution(arr, n) {
+  function loop(start, end, min) {
+    if (!end.length) return min
+    return loop(start.slice(1), end.slice(1), Math.min(end[0] - start[0], min))
+  }
+
+  const sorted = arr.sort((a, b) => a - b)
+  return loop(sorted, sorted.slice(n - 1), Infinity)
+}
+
+// A loop is probably better than recursion in this case
+function maximizeProfit(arr) {
+  const len = arr.length
+  function loop(min, curr, acc) {
+    if (curr === len - 1) {
+      if (min === null) return acc
+      else return acc.concat(min, curr)
+
+    }
+    if (min === null && arr[curr] < arr[curr + 1]) return loop(curr, curr + 1, acc)
+    if (min !== null && arr[curr] > arr[curr + 1]) return loop(null, curr + 1, acc.concat([min, curr]))
+    return loop(min, curr + 1, acc)
+  }
+
+  return loop(null, 0, [])
+}
+
 
 shortestPathSum([[1], [7,3], [4,36,2], [8,11,6,12]])
 minPlatforms([900,  940, 950,  1100, 1500, 1800], [910, 1200, 1120, 1130, 1900, 2000])
 maxOfSubarrays([1, 2, 3, 1, 4, 5, 2, 3, 6], 3) // [ 3, 3, 4, 5, 5, 5, 6 ]
 reverseGroups([1, 2, 3, 4, 5], 3) // [ 3, 2, 1, 5, 4 ]
 rainWater([3, 0, 0, 2, 0, 4]) // 10
+pythagoreanTriplet([3, 2, 4, 6, 5]) // true
+pythagoreanTriplet([3, 5, 7, 9, 2, 6]) // false
+chocolateDistribution([3, 4, 1, 9, 56, 7, 9, 12], 5) // 6
+maximizeProfit([23, 13, 25, 29, 33, 19, 34, 45, 65, 67]) // [ 1, 4, 5, 9 ]
